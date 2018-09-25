@@ -1,24 +1,6 @@
 {
   "posts": [
     {
-      "id": 1,
-      "name": "Cobby Harbron",
-      "email": "charbron23@telegraph.co.uk",
-      "text": "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus."
-    },
-    {
-      "id": 2,
-      "name": "Granger Crosthwaite",
-      "email": "gcrosthwaite1l@tmall.com",
-      "text": "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis."
-    },
-    {
-      "id": 3,
-      "name": "Lory Benito",
-      "email": "lbenitoo@artisteer.com",
-      "text": "Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros."
-    },
-    {
       "id": 4,
       "name": "Julieta Allin",
       "email": "jallin2f@alexa.com",
@@ -29,12 +11,6 @@
       "name": "Rurik Raymond",
       "email": "rraymond2m@theglobeandmail.com",
       "text": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi."
-    },
-    {
-      "id": 6,
-      "name": "Addy Advani",
-      "email": "aadvanic@indiegogo.com",
-      "text": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit."
     },
     {
       "id": 7,

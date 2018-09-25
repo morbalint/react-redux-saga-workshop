@@ -10,6 +10,7 @@ import {
   DELETE_POST_ERROR,
   DELETE_POST_CONFIRMED,
   FILTER_POSTS,
+  DELETE_POST_SUCCESS,
 } from './actions/types';
 import { getPosts } from './reducers';
 import { fetchPostsApi, deletePost } from './actions';
@@ -56,18 +57,44 @@ export function* filterPostsSaga({ name }) {
 }
 
 export function* countdownSaga() {
-
+  const chan = yield call(countdown, CANCEL_TIME);
+  try {
+    while (true) {
+      const remainingSeconds = yield take(chan);
+      yield put(countdownSeconds(remainingSeconds));
+    }
+  } finally {
+    chan.close();
+  }
 }
 
 export function* performDelete(id) {
+  try {
+    yield race({
+      timeout: call(countdownSaga),
+      instantDelete: take(DELETE_POST_CONFIRMED),
+    });
 
+    yield call(deletePost, id);
+
+    const posts = yield select(getPosts);
+    const modifiedPosts = posts.filter(post => post.id !== id);
+
+    yield put(deletePostSuccess(modifiedPosts));
+  } catch (error) {
+    yield put(deletePostError(error));
+  }
 }
 
 export function* removePost({ id }) {
-
+  yield race({
+    removePost: call(performDelete, id),
+    cancel: take([DELETE_POST_CANCELLED, DELETE_POST_ERROR]),
+  });
 }
 
 export default function* rootSaga() {
   yield takeEvery(FETCH_POSTS_REQUEST, fetchPostSaga);
   yield takeLatest(FILTER_CHANGED, filterPostsSaga);
+  yield takeEvery(DELETE_POST_REQUEST, removePost);
 }
