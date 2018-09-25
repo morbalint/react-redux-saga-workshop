@@ -38,8 +38,12 @@ const countdown = seconds => eventChannel((emitter) => {
 });
 
 export function* fetchPostSaga() {
-
-
+  try {
+    const posts = yield call(fetchPostsApi);
+    yield put(postsReceived(posts));
+  } catch (error) {
+    yield put(postsFailed(error));
+  }
 }
 
 export function* filterPostsSaga({ name }) {

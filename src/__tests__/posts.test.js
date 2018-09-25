@@ -19,10 +19,21 @@ import {
 
 describe('fetching posts', () => {
   const generator = cloneableGenerator(fetchPostSaga)();
+  const posts = {};
+  test('fetching posts successfully', () => {
+    const clone = generator.clone();
+    expect(clone.next().value).toEqual(call(fetchPostsApi));
+    expect(clone.next(posts).value).toEqual(put(postsReceived(posts)));
+    expect(clone.next().done).toBe(true);
+  });
 
-  test('fetching posts successfully', () => false);
-
-  test('fetching posts with error', () => false);
+  test('fetching posts with error', () => {
+    const clone = generator.clone();
+    const error = {};
+    expect(clone.next().value).toEqual(call(fetchPostsApi));
+    expect(clone.throw(error).value).toEqual(put(postsFailed(error)));
+    expect(clone.next().done).toBe(true);
+  });
 });
 
 describe('search by name', () => {
