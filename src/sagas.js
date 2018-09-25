@@ -9,6 +9,7 @@ import {
   DELETE_POST_CANCELLED,
   DELETE_POST_ERROR,
   DELETE_POST_CONFIRMED,
+  FILTER_POSTS,
 } from './actions/types';
 import { getPosts } from './reducers';
 import { fetchPostsApi, deletePost } from './actions';
@@ -47,7 +48,11 @@ export function* fetchPostSaga() {
 }
 
 export function* filterPostsSaga({ name }) {
-
+  yield call(delay, 500);
+  const searchName = name.toLowerCase();
+  const posts = yield select(getPosts);
+  const filteredPosts = posts.filter(post => post.name.toLowerCase().includes(searchName));
+  yield put(filterPosts(filteredPosts));
 }
 
 export function* countdownSaga() {
@@ -63,5 +68,6 @@ export function* removePost({ id }) {
 }
 
 export default function* rootSaga() {
-
+  yield takeEvery(FETCH_POSTS_REQUEST, fetchPostSaga);
+  yield takeLatest(FILTER_CHANGED, filterPostsSaga);
 }

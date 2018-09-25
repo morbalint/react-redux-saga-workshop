@@ -42,7 +42,13 @@ describe('search by name', () => {
 
   const usersMock = [{ name: 'Alice' }, { name: 'Bob' }, { name: 'Cindy' }];
 
-  test('successful search', () => false);
+  test('successful search', () => {
+    const clone = generator.clone();
+    expect(clone.next().value).toEqual(call(delay, 500));
+    expect(clone.next().value).toEqual(select(getPosts));
+    expect(clone.next(usersMock).value).toEqual(put(filterPosts([searchParam])));
+    expect(clone.next().done).toBe(true);
+  });
 });
 
 describe('delete post', () => {
